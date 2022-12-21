@@ -13,3 +13,11 @@
 * The migration:
     - `python3 manage.py migrate`
     - `python3 manage.py runserver` (to check site works)
+* Heroku & ElephantSQL DB:
+    - Create a Heroku App
+    - Create an ElephantSQL DB and copy the URL
+    - Create an `env.py` file and save both the Django secret key and DB URL values
+    - In `settings.py`, set the `SECRET_KEY` variable to the saved one in `env.py`.
+    - Also comment out the `DATABASE_URL` variable, creating a copy of one, equal to a dictionary where `default : dj_database_url.parse(os.environ.get('DATABASE_URL'))`
+    - `python3 manage.py migrate` (to migrate your database structure to the newly-connected ElephantSQL DB)
+    - Add both the `DATABASE_URL` and `SECRET_KEY` to your Heroku project's config vars, as well as `PORT` is 8000.
