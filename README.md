@@ -33,5 +33,13 @@
     - Before deployment, set the `ALLOWED_HOSTS` variable to `the_name_of_heroku_app.herokuapp.com` and add `localhost` to the list so you can still work on the project locally. 
 * Final Steps:
     - Create `static`, `templates` and `media` folders at the top level as mentioned in the `settings.py` file.
-    - Create a Procfile with the command `wed: gunicorn codestar.wsgi` and commit the project to ensure it is up-to-date.
+    - Create a Procfile with the command `web: gunicorn project_name_of_folder.wsgi` and commit the project to ensure it is up-to-date.
 
+#### Models:
+* Go to the `models.py` file within the project folder.
+* Open it up and import `from django.contrib.auth.models import User` to import user login data created later within a model. 
+* Also import `from cloudinary.models import CloudinaryField` to import the Cloudinary Field for a featured image.
+* To determine the post status, create a `STATUS` tuple equal to `((0, "Draft"), (1, "Published"))` so the programme knows the status of a user-created article in this case.
+* Create classes for the tables representing a post's contents, inheriting from `models.Model`. See the [Django Notes](https://github.com/Grawnya/django-notes) repo for more details and the samples in [models.py](https://github.com/Grawnya/I-think-therefore-I-blog/blob/main/blog/models.py).
+* Following the completion of the models, in the terminal place `python3 manage.py makemigrations` and add `--dry-run` beforehand if you want to check you are correct with spelling etc.
+* Then make the final migrations by `python3 manage.py migrate`.
