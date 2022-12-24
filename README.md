@@ -48,3 +48,27 @@
 * Create classes for the tables representing a post's contents, inheriting from `models.Model`. See the [Django Notes](https://github.com/Grawnya/django-notes) repo for more details and the samples in [models.py](https://github.com/Grawnya/I-think-therefore-I-blog/blob/main/blog/models.py).
 * Following the completion of the models, in the terminal place `python3 manage.py makemigrations` and add `--dry-run` beforehand if you want to check you are correct with spelling etc.
 * Then make the final migrations by `python3 manage.py migrate`.
+
+## Admin
+
+#### Creating a Superuser:
+* Type into the terminal `python3 manage.py createsuperuser` and you will be prompted to enter a username, email and password twice.
+* Run the server using `python3 manage.py runserver` and at the end of the link, put `/admin` which loads the admin page and asks the user to login.
+
+#### Adding Models to the Admin Page:
+* Go to `admins.py` in the app folder and import the required model class.
+* Include the line `admin.site.register(class_name)` to add the model to the admin page.
+
+#### WYSIWYG:
+* WYSIWYG (pronounced wiz-ee-wig) is a type of editing software that allows users to see and edit content in a form that appears as it would when displayed on an interface, webpage, slide presentation or printed document. WYSIWYG is an acronym for "what you see is what you get.
+* In this project, summernote will be used whihc can be downloaded in the terminal with `pip3 install django-summernote` and added to the requirements.txt document (`pip3 freeze --local > requirements.txt`).
+* Add the `django_summernote` app to the `INSTALLED_APPS`variable within `settings.py`. Note that it was installed with a `-`(hyphen), but the application is added with an `_`(underscore). This is common practice with Django libraries.
+* Go to `urls.py` and import the `include` method within the `django.urls` library.
+* Add a path with the `path`= `'summernote/'` and the `Pattern` = `include('django_summernote.urls')`, which will automatically register all summernote urls.
+
+#### Summernote Fields:
+* We need to tell our admin panel which field  we want to use Summernote for. So basically we're going to say that our a specific field, which is stored as a text field in the database is going to be a Summernote field e.g. `content` in this example.
+* Within `admin.py`, add `from django_summernote.admin  import SummernoteModelAdmin` and create a new class that's going to inherit from  `SummernoteModelAdmin`.
+* `summernote_fields = ('content')` using the `'content'` example uses the blog content from the model, which is a Django text field that we want to use a summernote for.
+* Remove the `admin.site.register(Post)` line and add a decorator to the top of the new class instead `@admin.register(name_of_model)` which registers both the model and the class. The former line is removed as it only takes in 2 arguments so gets quite full quickly and the decorator is more pythonic.
+* As more apps have been installed, you have to migrate again - `python3 manage.py migrate`.
