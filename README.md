@@ -72,3 +72,20 @@
 * `summernote_fields = ('content')` using the `'content'` example uses the blog content from the model, which is a Django text field that we want to use a summernote for.
 * Remove the `admin.site.register(Post)` line and add a decorator to the top of the new class instead `@admin.register(name_of_model)` which registers both the model and the class. The former line is removed as it only takes in 2 arguments so gets quite full quickly and the decorator is more pythonic.
 * As more apps have been installed, you have to migrate again - `python3 manage.py migrate`.
+
+#### Creating Slug Fields Automatically:
+* Use the `prepopulated_fields` property, specifically designed for generating slug fields, which calls a bit of JavaScript that formats and populates the slug field.
+* To use it, we pass in a dictionary that maps the field names to the fields that we want to populate from. This is done within the class in `admin.py` and is set to `{'slug': ('title',)}`, which automatically generates the `slug` when the user types out the `title`.
+* You can also add `list_filter = ('status', 'created_on')`, which creates a filter feature based on either the status or the date when the post was created i.e. list all the model attributes that you want to filter by here .
+
+#### Formatting Post Filters and Actions:
+* Use `list_display = ('title', 'slug', 'status', 'created_on')` to display all the posts in a table, showing the mentioned category values.
+* `search_fields` is used to enable a search box on the admin change list page. This should be set to a list of field names that will be searched whenever somebody submits a search query in that text box.
+* To add an action such as an approval action to the admin site, you can use the `actions` built-in feature, which allows the user to specify different actions that can be performed from the action drop-down box. The default action is just to delete the selected items.
+* Set `actions = ['function_of_approval']` and declare the function below e.g. one for `approve_comments` which allows the admin to set the value as `True`.
+\
+&nbsp;
+`def approve_comments (self, request, queryset):`
+\
+&nbsp;
+    `queryset.update(approved=True)`
