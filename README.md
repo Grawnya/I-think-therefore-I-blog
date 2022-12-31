@@ -101,3 +101,9 @@
 * `template_name` refers to the html page that should be loaded.
 * `paginate_by` refers to the number of instances shown e.g. 6 posts.
 * This creates the view code and then create html files within the `templates` folder to render the view, along with creating a CSS folder wihtin the `static` folder, creating a suitable `style.css` file within.
+
+#### Altering Templates based on View
+* Within a page, if you want to only show a certain number of elements per row e.g. 3 posts in a row, you can use the built-in loop counter e.g. `{% if forloop.counter|divisibleby:3 %}`.
+* Within an instance or post in this example, if an image is not provided, as noted by `if "placeholder" in post.featured_image.url` above an image, then a default image is used.
+* If pagination is used i.e. if a page only shows X options and more exist, then we want them to exist on another page, a `if is_paginated` loop has to be created before the final closing `div` tag at the bottom of the required page. 
+* The pagination block of code in this project is boilerplate code and therefore, can be used in your project.
