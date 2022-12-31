@@ -100,3 +100,4 @@
 * `status` can be either `0` (draft) or `1` (published). Therefore, `1` is selected as we only want the user to see the published posts.
 * `template_name` refers to the html page that should be loaded.
 * `paginate_by` refers to the number of instances shown e.g. 6 posts.
+* This creates the view code and then create html files within the `templates` folder to render the view, along with creating a CSS folder wihtin the `static` folder, creating a suitable `style.css` file within.
