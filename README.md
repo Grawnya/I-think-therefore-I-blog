@@ -107,3 +107,9 @@
 * Within an instance or post in this example, if an image is not provided, as noted by `if "placeholder" in post.featured_image.url` above an image, then a default image is used.
 * If pagination is used i.e. if a page only shows X options and more exist, then we want them to exist on another page, a `if is_paginated` loop has to be created before the final closing `div` tag at the bottom of the required page. 
 * The pagination block of code in this project is boilerplate code and therefore, can be used in your project.
+
+#### Connecting up the URLs
+* Create a file called `urls.py` within the app folder - namely `blog` in this example.
+* Import views and path and create the `urlpatterns` variable.
+* If the path is empty, this suggests that it is the home page. Similar to previously creating paths, due to using class based views, `.as_view()` has to be placed at the end of the named class view.
+* Open up the `urls.py` file for the overall project to connect the app's urls
