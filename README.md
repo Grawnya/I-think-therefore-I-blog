@@ -89,3 +89,14 @@
 \
 &nbsp;
     `queryset.update(approved=True)`
+
+## Views
+
+#### Class-based Views:
+* Class-based views allow us to make code that's reusable i.e. one view can inherit from another, which is not possible with standard function-based views. That means we can make use of some of the built-in features with Django, such as generic views.
+* Each time we create a new view, we need to do three things - Create the view code, create the view template and connect up the urls file.
+* Import a generic view by using `from django.views import generic` and create a class which inherits `generic.ListView`.
+* Set the variable `model` to the import model and set the variable `queryset` to a suitable set, which is used to render the list of instances related to the class e.g. `queryset = Post.objects.filter(status=1).order_by('-created_on')`.
+* `status` can be either `0` (draft) or `1` (published). Therefore, `1` is selected as we only want the user to see the published posts.
+* `template_name` refers to the html page that should be loaded.
+* `paginate_by` refers to the number of instances shown e.g. 6 posts.
