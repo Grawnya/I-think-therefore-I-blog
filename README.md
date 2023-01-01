@@ -134,7 +134,7 @@
 &nbsp;
 ## Authentication
 
-#### django-allauth
+#### `django-allauth`
 * This Django library can be used to send password and account confirmation emails, enforces password complexity and provides single sign on using Google and Facebook etc.
 * Install by `pip3 install django-allauth` and make sure to add to `requirements.txt` with `pip3 freeze --local > requirement.txt`.
 * All `allauth` urls need to be added to the project folder's `urls.py` file, as seen in the project.
@@ -152,4 +152,10 @@
 
 #### Sign Up
 * `allauth` by default then creates a sign up page which can be found by adding `/accounts/signup` to the primary url.
-* To connect the html links to these extra pages, use code like `{% url 'account_signup' %}` to sign up and similarly `{% url 'account_logout' %}` for logging out and `{% url 'account_login' %}` for logging in
+* To connect the html links to these extra pages, use code like `{% url 'account_signup' %}` to sign up and similarly `{% url 'account_logout' %}` for logging out and `{% url 'account_login' %}` for logging in.
+
+#### `allauth` templates
+* You firstly need to know what version of Python you are using. Type `ls ../.pip-modules/lib` into the terminal to find out.
+* Copy all installed modules into the templates directory by using `cp -r ../.pip-modules/lib/python3.8/site-packages/allauth/templates/* ./templates`, where `-r` refers to recursively, which means to include all directories and the python version you are using can be inserted into the link. The asterisk means all files and then type the directory you want to save all the modules into, which is `templates` in this case.
+* Within the `templates` folder, several folders are created, but the one of interest is the `account` folder. This consists of several templates that Django relies on for different tasks.
+* For example, within `login.html` it can be changed to match the current template of the other pages i.e. you can remove the `account/` in front of the `base.html` to utilise the existing base file.
