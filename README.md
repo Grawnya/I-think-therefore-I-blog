@@ -95,7 +95,7 @@
 #### Class-based Views:
 * Class-based views allow us to make code that's reusable i.e. one view can inherit from another, which is not possible with standard function-based views. That means we can make use of some of the built-in features with Django, such as generic views.
 * Each time we create a new view, we need to do three things - Create the view code, create the view template and connect up the urls file.
-* Import a generic view by using `from django.views import generic` and create a class which inherits `generic.ListView`.
+* Import a generic view by using `from django.views import generic` and create a class which inherits `generic.ListView` - useful if you have a list of objects you want to print to screen.
 * Set the variable `model` to the import model and set the variable `queryset` to a suitable set, which is used to render the list of instances related to the class e.g. `queryset = Post.objects.filter(status=1).order_by('-created_on')`.
 * `status` can be either `0` (draft) or `1` (published). Therefore, `1` is selected as we only want the user to see the published posts.
 * `template_name` refers to the html page that should be loaded.
@@ -112,4 +112,13 @@
 * Create a file called `urls.py` within the app folder - namely `blog` in this example.
 * Import views and path and create the `urlpatterns` variable.
 * If the path is empty, this suggests that it is the home page. Similar to previously creating paths, due to using class based views, `.as_view()` has to be placed at the end of the named class view.
-* Open up the `urls.py` file for the overall project to connect the app's urls
+* Open up the `urls.py` file for the overall project to connect the app's urls.
+
+## Project Specific - Viewing the Post's details in a New Page
+
+#### Creating an Associated View
+* In `views.py`, import `View` from `django.views` if not using a generic pattern for the view. [More Details](https://stackoverflow.com/questions/48506898/what-are-the-differences-between-generics-views-viewsets-and-mixins-in-django).
+* Also import `get_object_or_404` from `django.shortcuts` to check if a post exists.
+* Unlike generic views, you have to create functions for the request methods like `get` and `post` - follow the sample for `PostDetail` in `views.py`.
+* To check if a user has done a specific action, you can filter using `id=self.request.user.id` within the class.
+* Don't forget to return the rendered post with the suitable request, required template name and a library of corresponding post context.
