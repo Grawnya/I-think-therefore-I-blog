@@ -39,7 +39,8 @@
 #### Final Steps:
 * Create `static`, `templates` and `media` folders at the top level as mentioned in the `settings.py` file.
 * Create a Procfile with the command `web: gunicorn project_name_of_folder.wsgi` and commit the project to ensure it is up-to-date.
-
+\
+&nbsp;
 ## Models:
 * Go to the `models.py` file within the project folder.
 * Open it up and import `from django.contrib.auth.models import User` to import user login data created later within a model. 
@@ -48,7 +49,8 @@
 * Create classes for the tables representing a post's contents, inheriting from `models.Model`. See the [Django Notes](https://github.com/Grawnya/django-notes) repo for more details and the samples in [models.py](https://github.com/Grawnya/I-think-therefore-I-blog/blob/main/blog/models.py).
 * Following the completion of the models, in the terminal place `python3 manage.py makemigrations` and add `--dry-run` beforehand if you want to check you are correct with spelling etc.
 * Then make the final migrations by `python3 manage.py migrate`.
-
+\
+&nbsp;
 ## Admin
 
 #### Creating a Superuser:
@@ -89,7 +91,8 @@
 \
 &nbsp;
     `queryset.update(approved=True)`
-
+\
+&nbsp;
 ## Views
 
 #### Class-based Views:
@@ -113,7 +116,8 @@
 * Import views and path and create the `urlpatterns` variable.
 * If the path is empty, this suggests that it is the home page. Similar to previously creating paths, due to using class based views, `.as_view()` has to be placed at the end of the named class view.
 * Open up the `urls.py` file for the overall project to connect the app's urls.
-
+\
+&nbsp;
 ## Project Specific - Viewing the Post's details in a New Page
 
 #### Creating an Associated View
@@ -122,3 +126,7 @@
 * Unlike generic views, you have to create functions for the request methods like `get` and `post` - follow the sample for `PostDetail` in `views.py`.
 * To check if a user has done a specific action, you can filter using `id=self.request.user.id` within the class.
 * Don't forget to return the rendered post with the suitable request, required template name and a library of corresponding post context.
+
+#### Connecting to the suitable URL
+* Go to `urls.py` within the app folder and create a new path. As we intend to use the slug in the link, set the first parameter to `<slug:slug>/`, where the first slug is a path converter and the second slug is the `slug` keyword name that matches the `slug` parameter in the associated `PostDetail` class in the `views.py` file within the app folder.
+* Note the use of an `<a>` tag in the index file which consists of the post card that connects to the suitable page of the article in full. It has a `href` that looks similar to `{% url 'post_detail' post.slug %}`. The `'post_detail'` refers to the name of the suitable path in the `urls.py` file within the app folder.
