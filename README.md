@@ -159,3 +159,19 @@
 * Copy all installed modules into the templates directory by using `cp -r ../.pip-modules/lib/python3.8/site-packages/allauth/templates/* ./templates`, where `-r` refers to recursively, which means to include all directories and the python version you are using can be inserted into the link. The asterisk means all files and then type the directory you want to save all the modules into, which is `templates` in this case.
 * Within the `templates` folder, several folders are created, but the one of interest is the `account` folder. This consists of several templates that Django relies on for different tasks.
 * For example, within `login.html` it can be changed to match the current template of the other pages i.e. you can remove the `account/` in front of the `base.html` to utilise the existing base file.
+\
+&nbsp;
+## Commenting
+* `django-crispy-forms` will be used to create the commenting form and can be downloaded and added to `requirements.txt` as previously mentioned.
+
+#### Integrating the Comments
+* In `settings.py`, add `crispy_forms` to the `INSTALLED_APPS` list and add `CRISPY_TEMPLATE_PACK = 'bootstrap4'`, where even though we are using Bootstrap 5, at the time of creating the project, `crispy` only provides support for Bootstrap 3 and 4, so 4 will suffice.
+* In order to create the comment form, create a new file called `forms.py` within the app folder and import the `Comment` model as this has all the comment info and the `forms` as the base forms class, which is inherited as `forms.ModelForm`.
+* Within the `CommentForm` class, a `Meta` class is created which uses the `Comment` model and the fields are `body` within a tuple. Ensure there is a comma after the word `body` if no other fields are included, otherwise Django will treat it as a string, which will throw an error.
+* This comment form can be imported at the top of `views.py` and can be rendered in the post within the `PostDetail` class as `'comment_form': CommentForm()`, where the variable `comment_form` is equal to whatever the imported comments are.
+
+#### Showing the Comments on the Site
+* Make sure to add `{% load crispy_forms_tags %}` to the top of the required page (`post_detail.html` in this example).
+* Can show the comments at the end of the page in this example in `post_detail.html`, but note the `| crispy` filter use, which formats the comments nicely.
+* Cross Site Request Forgery or a CSRF token is also added, as a CSRF attack can happen when a malicious website contains a link, a form button or some JavaScript that is intended to perform some action on your website, using the credentials of a logged-in user who visits the malicious site in their browser.
+
