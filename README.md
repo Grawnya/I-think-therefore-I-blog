@@ -130,3 +130,26 @@
 #### Connecting to the suitable URL
 * Go to `urls.py` within the app folder and create a new path. As we intend to use the slug in the link, set the first parameter to `<slug:slug>/`, where the first slug is a path converter and the second slug is the `slug` keyword name that matches the `slug` parameter in the associated `PostDetail` class in the `views.py` file within the app folder.
 * Note the use of an `<a>` tag in the index file which consists of the post card that connects to the suitable page of the article in full. It has a `href` that looks similar to `{% url 'post_detail' post.slug %}`. The `'post_detail'` refers to the name of the suitable path in the `urls.py` file within the app folder.
+\
+&nbsp;
+## Authentication
+
+#### django-allauth
+* This Django library can be used to send password and account confirmation emails, enforces password complexity and provides single sign on using Google and Facebook etc.
+* Install by `pip3 install django-allauth` and make sure to add to `requirements.txt` with `pip3 freeze --local > requirement.txt`.
+* All `allauth` urls need to be added to the project folder's `urls.py` file, as seen in the project.
+
+#### Updating `settings.py`
+* Add `ACCOUNT_EMAIL_VERIFICATION = 'none'` to the project's `settings.py` file ton ensure no error `500` can occur during login and registration.
+* Add the following to the `INSTALLED_APPS` list:
+    * `'django.contrib.sites'` - It's a hook for associating objects and functionality to particular websites, and it's a holding place for the domain names.
+    * `'allauth'` - For user authentication.
+    * `'allauth.account'` - For dealing with user accounts.
+    * `'allauth.socialaccount'` - For dealing with user social media account logins.
+* Add `SITE_ID = 1` so that django can handle multiple sites from one database.
+* Add `LOGIN_REDIRECT_URL = '/'` and `LOGOUT_REDIRECT_URL = '/'` so that redirects the user to the homepage everytime they login or logout.
+* Make sure to `python3 manage.py migrate` any changes.
+
+#### Sign Up
+* `allauth` by default then creates a sign up page which can be found by adding `/accounts/signup` to the primary url.
+* To connect the html links to these extra pages, use code like `{% url 'account_signup' %}` to sign up and similarly `{% url 'account_logout' %}` for logging out and `{% url 'account_login' %}` for logging in
