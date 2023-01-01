@@ -170,8 +170,16 @@
 * Within the `CommentForm` class, a `Meta` class is created which uses the `Comment` model and the fields are `body` within a tuple. Ensure there is a comma after the word `body` if no other fields are included, otherwise Django will treat it as a string, which will throw an error.
 * This comment form can be imported at the top of `views.py` and can be rendered in the post within the `PostDetail` class as `'comment_form': CommentForm()`, where the variable `comment_form` is equal to whatever the imported comments are.
 
-#### Showing the Comments on the Site
+#### Rendering the Comments on the Site
 * Make sure to add `{% load crispy_forms_tags %}` to the top of the required page (`post_detail.html` in this example).
 * Can show the comments at the end of the page in this example in `post_detail.html`, but note the `| crispy` filter use, which formats the comments nicely.
 * Cross Site Request Forgery or a CSRF token is also added, as a CSRF attack can happen when a malicious website contains a link, a form button or some JavaScript that is intended to perform some action on your website, using the credentials of a logged-in user who visits the malicious site in their browser.
 
+#### Obtaining Comment Info from the Site
+* Similar to the `get` class method, `post` needs to be created, which will be very similar to `get`.
+* A variable `comment_form` (same as the variable in `views.py`) is created and set to the class created within `forms.py`, but the `data` parameter equals `request.POST`, getting all the data posted from the comment.
+* Check if all the correct fields have been filled in with the `is_valid()` method. Therefore, instance details can be obtained from the user who has made the post request.
+* Call the `.save()` method to save the comment, but set `commit=False` to prevent committing it to the database, as you first want to assign a blog post to it in this example.
+* If the comment is not valid, you can set it to a blank element by not letting the data equal to anythin within `CommentForm()`.
+* Within the `get` and `post` class methods, a `'commented'` variable is created to let the user know that their comment is waiting approval.
+* This `'commented'` variable is used within `post_detail.html` to alert the user of the approval requirement.
