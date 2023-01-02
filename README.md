@@ -94,6 +94,7 @@
 \
 &nbsp;
 ## Views
+* Note: When creating a new view, you need to create the view code, create a template to render the view and then connect up our URLs in the `urls.py` file.
 
 #### Class-based Views:
 * Class-based views allow us to make code that's reusable i.e. one view can inherit from another, which is not possible with standard function-based views. That means we can make use of some of the built-in features with Django, such as generic views.
@@ -183,3 +184,13 @@
 * If the comment is not valid, you can set it to a blank element by not letting the data equal to anythin within `CommentForm()`.
 * Within the `get` and `post` class methods, a `'commented'` variable is created to let the user know that their comment is waiting approval.
 * This `'commented'` variable is used within `post_detail.html` to alert the user of the approval requirement.
+\
+&nbsp;
+## Liking
+* Similar to the post detailing and list views, create a class, which checks if a post exists.
+* Check if the user has liked the post. If it has then remove the like when they click on the love heart, otherwise add them to the list of users who have liked the post and alter the love heart. 
+* In `views.py`, `HttpResponseRedirect` is imported to reload the `post_detail.html` template so you can see the results live without having to refresh the page.
+* Also import `reverse`, so you can look up a URL by the name that you give it in the `urls.py` file.
+* Return the redirected response, but add the slug as an argument so django knows which page to load.
+* Return to `post_detail.html` and add the option to like if the user is authenticated making the icon solid if liked and only an outline if not liked. Make sure to include an `else` block if the user is not authenticated which only shows the love heart icon and the number of likes.
+* Finally create the url in the app folder's `urls.py` file which is the similar to the `PostDetail` one but the name is `post_like` to match the reference in the form in `post_detail.html`.
