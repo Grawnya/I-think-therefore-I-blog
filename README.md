@@ -194,3 +194,17 @@
 * Return the redirected response, but add the slug as an argument so django knows which page to load.
 * Return to `post_detail.html` and add the option to like if the user is authenticated making the icon solid if liked and only an outline if not liked. Make sure to include an `else` block if the user is not authenticated which only shows the love heart icon and the number of likes.
 * Finally create the url in the app folder's `urls.py` file which is the similar to the `PostDetail` one but the name is `post_like` to match the reference in the form in `post_detail.html`.
+\
+&nbsp;
+## Messages
+* Messages are added to provide feedback to the user.
+* Note: Django handles messages by default as seen in the `INSTALLED_APPS` list as `'django.contrib.messages'` in `settings.py`.
+* To utilise the messages add the following to the top of `settings.py`: `from django.contrib.messages import constants as messages`, so you can assign tags to them.
+
+#### Tags
+* Tags refers to the built-in label assigned to a message to indicate the category of message e.g. warning, error etc.
+* Create a dictionary variable called `MESSAGE_TAGS` and fill it with key value pairs where the message tag is linked with a Bootstrap class.
+* Incorporate the messages into the `base.html` file by creating a container for them and since messages are built into Django, the `for` loop `for message in messages` will suffice.
+* Add a div within the loop with the class `"alert {{message.tags}} alert-dismissible fade show"`, where the `message.tags` correspond to the Bootstrap alert type and the rest of the classes are standard Bootstrap alert classes.
+* Add the message and include the `safe` filter so no malicious messages are displayed. Follow this message with a button so the user can click off it.
+* To automatically dismiss the alert, add suitable JavaScript to the project as seen at the bottom of `base.html`.
