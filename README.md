@@ -212,4 +212,5 @@
 &nbsp;
 ## Final Deployment
 * Make sure to set the `DEBUG` value in `settings.py` to False before final deployment, otherwise Django will provide the static files e.g. CSS file, itself rather than the ones on cloudinary and it will also provide yellow error traceback pages which might contain sensitive information that you don't want hackers to obtain.
-* Also add `X_FRAME_OPTIONS = 'SAMEORIGIN'`, which is a security feature for summernote known as Cross-Origin Resource Sharing or CORS for short. CORS tells the browser what resources are permitted to be loaded. Without this setting, our browser wouldn't be able to load the summernote editor.  
+* Also add `X_FRAME_OPTIONS = 'SAMEORIGIN'`, which is a security feature for summernote known as Cross-Origin Resource Sharing or CORS for short. CORS tells the browser what resources are permitted to be loaded. Without this setting, our browser wouldn't be able to load the summernote editor.
+* Within the project in Heroku, remove the config var `DISABLE_COLLECTSTATIC` and then deploy as usual.
