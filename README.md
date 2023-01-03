@@ -106,13 +106,13 @@
 * `paginate_by` refers to the number of instances shown e.g. 6 posts.
 * This creates the view code and then create html files within the `templates` folder to render the view, along with creating a CSS folder wihtin the `static` folder, creating a suitable `style.css` file within.
 
-#### Altering Templates based on View
+#### Altering Templates based on View:
 * Within a page, if you want to only show a certain number of elements per row e.g. 3 posts in a row, you can use the built-in loop counter e.g. `{% if forloop.counter|divisibleby:3 %}`.
 * Within an instance or post in this example, if an image is not provided, as noted by `if "placeholder" in post.featured_image.url` above an image, then a default image is used.
 * If pagination is used i.e. if a page only shows X options and more exist, then we want them to exist on another page, a `if is_paginated` loop has to be created before the final closing `div` tag at the bottom of the required page. 
 * The pagination block of code in this project is boilerplate code and therefore, can be used in your project.
 
-#### Connecting up the URLs
+#### Connecting up the URLs:
 * Create a file called `urls.py` within the app folder - namely `blog` in this example.
 * Import views and path and create the `urlpatterns` variable.
 * If the path is empty, this suggests that it is the home page. Similar to previously creating paths, due to using class based views, `.as_view()` has to be placed at the end of the named class view.
@@ -121,26 +121,26 @@
 &nbsp;
 ## Project Specific - Viewing the Post's details in a New Page
 
-#### Creating an Associated View
+#### Creating an Associated View:
 * In `views.py`, import `View` from `django.views` if not using a generic pattern for the view. [More Details](https://stackoverflow.com/questions/48506898/what-are-the-differences-between-generics-views-viewsets-and-mixins-in-django).
 * Also import `get_object_or_404` from `django.shortcuts` to check if a post exists.
 * Unlike generic views, you have to create functions for the request methods like `get` and `post` - follow the sample for `PostDetail` in `views.py`.
 * To check if a user has done a specific action, you can filter using `id=self.request.user.id` within the class.
 * Don't forget to return the rendered post with the suitable request, required template name and a library of corresponding post context.
 
-#### Connecting to the suitable URL
+#### Connecting to the suitable URL:
 * Go to `urls.py` within the app folder and create a new path. As we intend to use the slug in the link, set the first parameter to `<slug:slug>/`, where the first slug is a path converter and the second slug is the `slug` keyword name that matches the `slug` parameter in the associated `PostDetail` class in the `views.py` file within the app folder.
 * Note the use of an `<a>` tag in the index file which consists of the post card that connects to the suitable page of the article in full. It has a `href` that looks similar to `{% url 'post_detail' post.slug %}`. The `'post_detail'` refers to the name of the suitable path in the `urls.py` file within the app folder.
 \
 &nbsp;
 ## Authentication
 
-#### `django-allauth`
+#### `django-allauth`:
 * This Django library can be used to send password and account confirmation emails, enforces password complexity and provides single sign on using Google and Facebook etc.
 * Install by `pip3 install django-allauth` and make sure to add to `requirements.txt` with `pip3 freeze --local > requirement.txt`.
 * All `allauth` urls need to be added to the project folder's `urls.py` file, as seen in the project.
 
-#### Updating `settings.py`
+#### Updating `settings.py`:
 * Add `ACCOUNT_EMAIL_VERIFICATION = 'none'` to the project's `settings.py` file ton ensure no error `500` can occur during login and registration.
 * Add the following to the `INSTALLED_APPS` list:
     * `'django.contrib.sites'` - It's a hook for associating objects and functionality to particular websites, and it's a holding place for the domain names.
@@ -151,11 +151,11 @@
 * Add `LOGIN_REDIRECT_URL = '/'` and `LOGOUT_REDIRECT_URL = '/'` so that redirects the user to the homepage everytime they login or logout.
 * Make sure to `python3 manage.py migrate` any changes.
 
-#### Sign Up
+#### Sign Up:
 * `allauth` by default then creates a sign up page which can be found by adding `/accounts/signup` to the primary url.
 * To connect the html links to these extra pages, use code like `{% url 'account_signup' %}` to sign up and similarly `{% url 'account_logout' %}` for logging out and `{% url 'account_login' %}` for logging in.
 
-#### `allauth` templates
+#### `allauth` templates:
 * You firstly need to know what version of Python you are using. Type `ls ../.pip-modules/lib` into the terminal to find out.
 * Copy all installed modules into the templates directory by using `cp -r ../.pip-modules/lib/python3.8/site-packages/allauth/templates/* ./templates`, where `-r` refers to recursively, which means to include all directories and the python version you are using can be inserted into the link. The asterisk means all files and then type the directory you want to save all the modules into, which is `templates` in this case.
 * Within the `templates` folder, several folders are created, but the one of interest is the `account` folder. This consists of several templates that Django relies on for different tasks.
@@ -165,18 +165,18 @@
 ## Commenting
 * `django-crispy-forms` will be used to create the commenting form and can be downloaded and added to `requirements.txt` as previously mentioned.
 
-#### Integrating the Comments
+#### Integrating the Comments:
 * In `settings.py`, add `crispy_forms` to the `INSTALLED_APPS` list and add `CRISPY_TEMPLATE_PACK = 'bootstrap4'`, where even though we are using Bootstrap 5, at the time of creating the project, `crispy` only provides support for Bootstrap 3 and 4, so 4 will suffice.
 * In order to create the comment form, create a new file called `forms.py` within the app folder and import the `Comment` model as this has all the comment info and the `forms` as the base forms class, which is inherited as `forms.ModelForm`.
 * Within the `CommentForm` class, a `Meta` class is created which uses the `Comment` model and the fields are `body` within a tuple. Ensure there is a comma after the word `body` if no other fields are included, otherwise Django will treat it as a string, which will throw an error.
 * This comment form can be imported at the top of `views.py` and can be rendered in the post within the `PostDetail` class as `'comment_form': CommentForm()`, where the variable `comment_form` is equal to whatever the imported comments are.
 
-#### Rendering the Comments on the Site
+#### Rendering the Comments on the Site:
 * Make sure to add `{% load crispy_forms_tags %}` to the top of the required page (`post_detail.html` in this example).
 * Can show the comments at the end of the page in this example in `post_detail.html`, but note the `| crispy` filter use, which formats the comments nicely.
 * Cross Site Request Forgery or a CSRF token is also added, as a CSRF attack can happen when a malicious website contains a link, a form button or some JavaScript that is intended to perform some action on your website, using the credentials of a logged-in user who visits the malicious site in their browser.
 
-#### Obtaining Comment Info from the Site
+#### Obtaining Comment Info from the Site:
 * Similar to the `get` class method, `post` needs to be created, which will be very similar to `get`.
 * A variable `comment_form` (same as the variable in `views.py`) is created and set to the class created within `forms.py`, but the `data` parameter equals `request.POST`, getting all the data posted from the comment.
 * Check if all the correct fields have been filled in with the `is_valid()` method. Therefore, instance details can be obtained from the user who has made the post request.
@@ -201,10 +201,15 @@
 * Note: Django handles messages by default as seen in the `INSTALLED_APPS` list as `'django.contrib.messages'` in `settings.py`.
 * To utilise the messages add the following to the top of `settings.py`: `from django.contrib.messages import constants as messages`, so you can assign tags to them.
 
-#### Tags
+#### Tags:
 * Tags refers to the built-in label assigned to a message to indicate the category of message e.g. warning, error etc.
 * Create a dictionary variable called `MESSAGE_TAGS` and fill it with key value pairs where the message tag is linked with a Bootstrap class.
 * Incorporate the messages into the `base.html` file by creating a container for them and since messages are built into Django, the `for` loop `for message in messages` will suffice.
 * Add a div within the loop with the class `"alert {{message.tags}} alert-dismissible fade show"`, where the `message.tags` correspond to the Bootstrap alert type and the rest of the classes are standard Bootstrap alert classes.
 * Add the message and include the `safe` filter so no malicious messages are displayed. Follow this message with a button so the user can click off it.
 * To automatically dismiss the alert, add suitable JavaScript to the project as seen at the bottom of `base.html`.
+\
+&nbsp;
+## Final Deployment
+* Make sure to set the `DEBUG` value in `settings.py` to False before final deployment, otherwise Django will provide the static files e.g. CSS file, itself rather than the ones on cloudinary and it will also provide yellow error traceback pages which might contain sensitive information that you don't want hackers to obtain.
+* Also add `X_FRAME_OPTIONS = 'SAMEORIGIN'`, which is a security feature for summernote known as Cross-Origin Resource Sharing or CORS for short. CORS tells the browser what resources are permitted to be loaded. Without this setting, our browser wouldn't be able to load the summernote editor.  
