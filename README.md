@@ -8,7 +8,7 @@
 * `pip3 install dj_database_url==0.5.0 psycopg2`
 * `pip3 install dj3-cloudinary-storage`
 * `pip3 freeze --local > requirements.txt`
-* `django-admin startproject codestar .`
+* `django-admin startproject project_name .`
 * `python3 manage.py startapp app_name`
 * Then add the app name to the `settings.py` file in the `INSTALLED_APPS` list.
 
